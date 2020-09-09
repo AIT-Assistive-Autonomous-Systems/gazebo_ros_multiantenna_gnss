@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<!--
+  Multiantenna Gnss plugin demo
+
+  Subscribe to /gphdt to check published data.
+-->
+<sdf version="1.6">
+  <world name="default">
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <physics type="ode">
+      <max_step_size>0.1</max_step_size>
+    </physics>
+
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>48.157034</latitude_deg>
+      <longitude_deg>14.491829</longitude_deg>
+      <elevation>100</elevation>
+      <!-- currently gazebo has a bug: instead of outputing lat, long, altitude in ENU
+        (x = East, y = North and z = Up) as the default configurations, it's outputting (-E)(-N)U,
+        therefore we rotate the default frame 180 so that it would go back to ENU -->
+      <!-- <heading_deg>180</heading_deg> -->
+    </spherical_coordinates>
+
+    <include>
+      <uri>model://gazebo_ros_multiantenna_gnss_test_model</uri>
+      <pose>0 0 1 0 0 0</pose>
+      <static>true</static>
+    </include>
+  </world>
+</sdf>

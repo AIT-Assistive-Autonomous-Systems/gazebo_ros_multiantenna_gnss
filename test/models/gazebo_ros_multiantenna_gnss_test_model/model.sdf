@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="multiantenna_gnss_test_model">
+    <link name="aux_antenna">
+      <pose>1 1 0 0 0 0</pose>
+      <inertial>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.000</ixy>
+          <ixz>0.000</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0.000</iyz>
+          <izz>0.001</izz>
+        </inertia>
+        <mass>1.0</mass>
+      </inertial>
+      <visual name="aux_antenna">
+        <geometry>
+          <sphere>
+            <radius>0.2</radius>
+          </sphere>
+        </geometry>
+      </visual>
+      <collision name="aux_antenna">
+        <geometry>
+          <sphere>
+            <radius>0.2</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <sensor
+          name="aux_gps"
+          type="gps">
+        <always_on>true</always_on>
+        <update_rate>10</update_rate>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1e-5</stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1e-5</stddev>
+              </noise>
+            </vertical>
+          </position_sensing>
+        </gps>
+      </sensor>
+    </link>
+    <link name="main_antenna">
+      <pose>-1 -1 0 0 0 0</pose>
+      <inertial>
+        <inertia>
+          <ixx>0.001</ixx>
+          <ixy>0.000</ixy>
+          <ixz>0.000</ixz>
+          <iyy>0.001</iyy>
+          <iyz>0.000</iyz>
+          <izz>0.001</izz>
+        </inertia>
+        <mass>1.0</mass>
+      </inertial>
+      <visual name="main_antenna">
+        <geometry>
+          <sphere>
+            <radius>0.2</radius>
+          </sphere>
+        </geometry>
+      </visual>
+      <collision name="main_antenna">
+        <geometry>
+          <sphere>
+            <radius>0.2</radius>
+          </sphere>
+        </geometry>
+      </collision>
+      <sensor
+          name="main_gps"
+          type="gps">
+        <always_on>true</always_on>
+        <update_rate>1</update_rate>
+        <gps>
+          <position_sensing>
+            <horizontal>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1e-5</stddev>
+              </noise>
+            </horizontal>
+            <vertical>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1e-5</stddev>
+              </noise>
+            </vertical>
+          </position_sensing>
+        </gps>
+        <plugin
+            name="main_gps_ros"
+            filename="libgazebo_ros_multiantenna_gnss.so">
+          <ros>
+            <remapping>~/gphdt:=gphdt</remapping>
+          </ros>
+          <aux_sensor>aux_gps</aux_sensor>
+        </plugin>
+      </sensor>
+    </link>
+  </model>
+</sdf>
