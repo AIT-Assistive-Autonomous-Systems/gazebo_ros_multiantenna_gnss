@@ -28,6 +28,11 @@ gazebo --verbose -s libgazebo_ros_init.so -s libgazebo_ros_factory.so test/world
 The following parameters can be passed as children on the sdf plugin element.
 
 * `aux_sensor` (required): name of sensor to reference the heading to
+* `frame_name`: frame id of the published message
+
+To add simulated noise, configure noise on one or both of the sensors determining the positions.
+
+Make sure the referenced antenna link is defined before the main antenna in the SDF, since it will be queried at initialization.
 
 ### Publishers
 
@@ -36,15 +41,32 @@ The following parameters can be passed as children on the sdf plugin element.
 ### Example
 
 ```xml
-<sensor>
+<sensor name="aux_gps" type="gps">
+    <always_on>true</always_on>
+    <update_rate>1.0</update_rate>
+    <gps>
+      <position_sensing>
+        <horizontal>
+          <noise type="gaussian">
+            <mean>1e-4</mean>
+            <stddev>1e-5</stddev>
+          </noise>
+        </horizontal>
+        <vertical>
+          <noise type="gaussian">
+            <mean>1e-4</mean>
+            <stddev>1e-5</stddev>
+          </noise>
+        </vertical>
+      </position_sensing>
+    </gps>
     ...
-    <plugin name="multiantenna" filename="libgazebo_ros_multiantenna_gnss.so">
+    <plugin name="multiantenna_gnss0" filename="libgazebo_ros_multiantenna_gnss.so">
         <ros>
           <namespace>vehicle0</namespace>
         </ros>
-        <aux_antenna>aux_antenna_sensor_name</aux_antenna>
-        <update_rate>1.0</update_rate>
-        <frame_id>antenna_name</frame_id>
+        <aux_sensor>aux_sensor_name</aux_sensor>
+        <frame_name>antenna_frame</frame_name>
       </plugin>
       ...
 </sensor>
@@ -52,7 +74,7 @@ The following parameters can be passed as children on the sdf plugin element.
 
 ## License and Copyright
 
-Copyright [2020] AIT Austrian Institute of Technology GmbH
+Copyright 2020 AIT Austrian Institute of Technology GmbH
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

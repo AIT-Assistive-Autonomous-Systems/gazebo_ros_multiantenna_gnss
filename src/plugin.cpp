@@ -106,8 +106,7 @@ void GazeboRosMultiantennaGnss::Load(gazebo::sensors::SensorPtr _sensor, sdf::El
     return;
   }
   impl_->aux_sensor_ = aux_sensor_gps;
-  impl_->frame_id_ =
-    _sdf->Get<std::string>("frame_id", gazebo_ros::SensorFrameID(*_sensor, *_sdf)).first;
+  impl_->frame_id_ = gazebo_ros::SensorFrameID(*_sensor, *_sdf);
 
   impl_->sensor_update_event_ = impl_->sensor_->ConnectUpdated(
     std::bind(&GazeboRosMultiantennaGnssPrivate::OnUpdate, impl_.get()));

@@ -40,14 +40,14 @@
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
-                <mean>1e-5</mean>
-                <stddev>1e-6</stddev>
+                <mean>1e-4</mean>
+                <stddev>1e-5</stddev>
               </noise>
             </horizontal>
             <vertical>
               <noise type="gaussian">
-                <mean>1e-5</mean>
-                <stddev>1e-6</stddev>
+                <mean>1e-4</mean>
+                <stddev>1e-5</stddev>
               </noise>
             </vertical>
           </position_sensing>
@@ -93,14 +93,14 @@
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
-                <mean>1e-5</mean>
-                <stddev>1e-6</stddev>
+                <mean>1e-4</mean>
+                <stddev>1e-5</stddev>
               </noise>
             </horizontal>
             <vertical>
               <noise type="gaussian">
-                <mean>1e-5</mean>
-                <stddev>1e-6</stddev>
+                <mean>1e-4</mean>
+                <stddev>1e-5</stddev>
               </noise>
             </vertical>
           </position_sensing>
