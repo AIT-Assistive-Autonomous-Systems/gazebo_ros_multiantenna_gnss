@@ -25,6 +25,7 @@
 
 #include <gazebo_ros/node.hpp>
 #include <gazebo_ros/utils.hpp>
+#include <gazebo_ros/conversions/builtin_interfaces.hpp>
 #include <novatel_gps_msgs/msg/gphdt.hpp>
 
 #include "gazebo_ros_multiantenna_gnss/plugin.hpp"
@@ -125,7 +126,8 @@ void GazeboRosMultiantennaGnssPrivate::OnUpdate()
 {
   auto msg = std::make_unique<Gphdt>();
   msg->header.frame_id = frame_id_;
-  msg->header.stamp = ros_node_->now();
+  msg->header.stamp = gazebo_ros::Convert<builtin_interfaces::msg::Time>(
+    sensor_->LastUpdateTime());
 
   double main_lat = sensor_->Latitude().Radian();
   double main_lon = sensor_->Longitude().Radian();
@@ -133,10 +135,7 @@ void GazeboRosMultiantennaGnssPrivate::OnUpdate()
   double aux_lat = aux_sensor_->Latitude().Radian();
   double aux_lon = aux_sensor_->Longitude().Radian();
 
-  RCLCPP_INFO(
-    ros_node_->get_logger(),
-    "dlat %.8f    dlon %.8f", aux_lat - main_lat, aux_lon - main_lon);
-
+  msg->message_id = "GPHDT";
   msg->heading = Bearing(main_lat, main_lon, aux_lat, aux_lon).Degree();
   msg->t = "T";
   pub_gphdt_->publish(std::move(msg));

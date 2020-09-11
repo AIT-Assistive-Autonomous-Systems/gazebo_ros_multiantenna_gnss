@@ -32,19 +32,19 @@
           name="aux_gps"
           type="gps">
         <always_on>true</always_on>
-        <update_rate>10</update_rate>
+        <update_rate>1.0</update_rate>
         <gps>
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>1e-5</stddev>
+                <mean>1e-5</mean>
+                <stddev>1e-6</stddev>
               </noise>
             </horizontal>
             <vertical>
               <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>1e-5</stddev>
+                <mean>1e-5</mean>
+                <stddev>1e-6</stddev>
               </noise>
             </vertical>
           </position_sensing>
@@ -82,19 +82,19 @@
           name="main_gps"
           type="gps">
         <always_on>true</always_on>
-        <update_rate>1</update_rate>
+        <update_rate>1.0</update_rate>
         <gps>
           <position_sensing>
             <horizontal>
               <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>1e-5</stddev>
+                <mean>1e-5</mean>
+                <stddev>1e-6</stddev>
               </noise>
             </horizontal>
             <vertical>
               <noise type="gaussian">
-                <mean>0.0</mean>
-                <stddev>1e-5</stddev>
+                <mean>1e-5</mean>
+                <stddev>1e-6</stddev>
               </noise>
             </vertical>
           </position_sensing>

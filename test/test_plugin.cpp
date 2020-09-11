@@ -15,11 +15,9 @@
 #include <gazebo/common/Time.hh>
 #include <gazebo/test/ServerFixture.hh>
 #include <memory>
+#include <utility>
 #include <novatel_gps_msgs/msg/gphdt.hpp>
 #include <rclcpp/rclcpp.hpp>
-
-// floating-point tolerance for test comparisons
-#define tol 10e-1
 
 using namespace std::literals::chrono_literals; // NOLINT
 using novatel_gps_msgs::msg::Gphdt;
@@ -41,19 +39,19 @@ TEST_F(GazeboRosMultiantennaGnssTest, Measure45deg)
   auto node = std::make_shared<rclcpp::Node>("gazebo_ros_multiantenna_gnss");
   ASSERT_NE(nullptr, node);
 
-  rclcpp::executors::SingleThreadedExecutor executor;
-  executor.add_node(node);
-
   Gphdt::SharedPtr last_msg = nullptr;
   auto pub = node->create_subscription<Gphdt>(
     "gphdt", rclcpp::SensorDataQoS(), [&last_msg](Gphdt::SharedPtr msg) {
       last_msg = msg;
     });
-  world->Step(21);
-  executor.spin_once(210ms);
+
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
+  world->Step(101);
+  executor.spin_once(1001ms);
 
   ASSERT_NE(nullptr, last_msg);
-  EXPECT_NEAR(45.0, last_msg->heading, tol);
+  EXPECT_NEAR(45.0, last_msg->heading, 0.2);
 }
 
 int main(int argc, char ** argv)
