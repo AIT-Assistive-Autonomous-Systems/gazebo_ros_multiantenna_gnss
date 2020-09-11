@@ -20,6 +20,9 @@
             <radius>0.2</radius>
           </sphere>
         </geometry>
+        <material>
+          <ambient>0 0 1 1</ambient>
+        </material>
       </visual>
       <collision name="aux_antenna">
         <geometry>
@@ -70,6 +73,9 @@
             <radius>0.2</radius>
           </sphere>
         </geometry>
+        <material>
+          <ambient>1 0 0 1</ambient>
+        </material>
       </visual>
       <collision name="main_antenna">
         <geometry>
