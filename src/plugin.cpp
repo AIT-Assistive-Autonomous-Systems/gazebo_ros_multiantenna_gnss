@@ -19,6 +19,7 @@
 #include <gazebo/sensors/GpsSensor.hh>
 #include <sdf/sdf.hh>
 
+#include <utility>
 #include <memory>
 #include <string>
 #include <vector>
@@ -118,7 +119,7 @@ inline Angle Bearing(double lat1, double lon1, double lat2, double lon2)
   double y = sin(d_lon) * cos(lat2);
   double x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(d_lon);
   double theta = atan2(y, x);
-  return Angle(theta + M_PI);
+  return Angle(theta);
 }
 
 void GazeboRosMultiantennaGnssPrivate::OnUpdate()
@@ -135,7 +136,7 @@ void GazeboRosMultiantennaGnssPrivate::OnUpdate()
   double aux_lon = aux_sensor_->Longitude().Radian();
 
   msg->message_id = "GPHDT";
-  msg->heading = Bearing(main_lat, main_lon, aux_lat, aux_lon).Degree();
+  msg->heading = fmod(Bearing(main_lat, main_lon, aux_lat, aux_lon).Degree() + 360.0, 360.0);
   msg->t = "T";
   pub_gphdt_->publish(std::move(msg));
 }
