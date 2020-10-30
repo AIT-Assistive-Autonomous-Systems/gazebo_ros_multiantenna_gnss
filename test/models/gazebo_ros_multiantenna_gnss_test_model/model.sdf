@@ -21,7 +21,7 @@
           </sphere>
         </geometry>
         <material>
-          <ambient>0 0 1 1</ambient>
+          <ambient>0 1 0 1</ambient>
         </material>
       </visual>
       <collision name="aux_antenna">
