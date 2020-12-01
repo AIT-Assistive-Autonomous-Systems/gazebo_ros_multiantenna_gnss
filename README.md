@@ -4,9 +4,7 @@ Computes true north heading based on two GPS sensors in Gazebo.
 
 ## Installation
 
-Developed and tested with ROS eloquent.
-
-* clone to your ros2 workspace
+* clone to your workspace
 * rosdep install --from-path src -i
 * colcon build
 * source install/setup.bash
